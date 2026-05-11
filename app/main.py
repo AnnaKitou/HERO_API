@@ -6,7 +6,7 @@ Creates the FastAPI instance, wires up:
   - CORS middleware
   - Custom timing middleware
   - Exception handlers
-  - All routers (auth, users, heroes)
+  - All routers (auth, heroes, missions)
 
 Run:  uvicorn app.main:app --reload
 Docs: http://127.0.0.1:8000/docs
@@ -25,7 +25,7 @@ from starlette.responses import Response
 from app.config import get_settings
 from app.db import create_db_and_tables
 from app.exceptions import register_exception_handlers
-from app.routers import auth, heroes
+from app.routers import auth, heroes, missions
 
 settings = get_settings()
 
@@ -86,6 +86,7 @@ register_exception_handlers(app)
 
 app.include_router(auth.router)
 app.include_router(heroes.router)
+app.include_router(missions.router)
 
 
 # --- Root ---
