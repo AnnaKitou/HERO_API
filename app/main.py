@@ -25,7 +25,7 @@ from starlette.responses import Response
 from app.config import get_settings
 from app.db import create_db_and_tables
 from app.exceptions import register_exception_handlers
-from app.routers import auth, heroes, users
+from app.routers import auth, heroes
 
 settings = get_settings()
 
@@ -85,7 +85,6 @@ register_exception_handlers(app)
 # --- Routers ---
 
 app.include_router(auth.router)
-app.include_router(users.router)
 app.include_router(heroes.router)
 
 
