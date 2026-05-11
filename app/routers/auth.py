@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import select
-from app.dependencies import CurrentUser, SessionDep
+from app.dependencies import AdminUser, CurrentUser, SessionDep
 from app.models.user import User
 from app.schemas.user import UserCreate, UserOut
 from app.security import create_access_token, hash_password, verify_password
@@ -54,8 +54,6 @@ def me(user: CurrentUser):
 
 
 @router.get("/admin")
-def admin_only(user: CurrentUser):
+def admin_only(admin: AdminUser):
     """Admin-only endpoint. Raises 403 for non-admin users."""
-    if not user.is_admin:
-        raise HTTPException(status.HTTP_403_FORBIDDEN, "Admins only")
-    return {"secret": "42", "message": f"Welcome, admin {user.username}!"}
+    return {"secret": "42", "message": f"Welcome, admin {admin.username}!"}
