@@ -56,14 +56,3 @@ def get_current_user(
 
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
-
-
-# --- Pagination ---
-
-
-def pagination(skip: int = 0, limit: int = 20) -> dict:
-    """Reusable pagination dependency."""
-    return {"skip": skip, "limit": limit}
-
-
-Page = Annotated[dict, Depends(pagination)]

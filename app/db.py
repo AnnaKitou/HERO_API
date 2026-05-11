@@ -1,9 +1,5 @@
-"""
-Database — Engine, Session & Table Creation
-
-One engine per process, one session per request.
-The session is injected as a dependency via get_session().
-"""
+from fastapi.params import Depends
+from typing_extensions import Annotated
 
 from sqlmodel import Session, SQLModel, create_engine
 
