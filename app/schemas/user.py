@@ -1,23 +1,24 @@
-from sqlmodel import SQLModel, Field
+from pydantic import BaseModel, Field
 
 
-# USER MODELS
+class UserCreate(BaseModel):
+    """Schema for creating a user."""
 
-class UserBase(SQLModel):
-    username: str = Field(index=True, unique=True)
-
-
-class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    hashed_password: str
-    is_admin: bool = False
+    username: str = Field(min_length=3, max_length=50)
+    password: str = Field(min_length=6)
 
 
-class UserCreate(UserBase):
-    password: str
+class UserUpdate(BaseModel):
+    """Schema for updating a user."""
+
+    username: str | None = Field(default=None, min_length=3, max_length=50)
+    password: str | None = Field(default=None, min_length=6)
+    is_admin: bool | None = None
 
 
-class UserRead(UserBase):
+class UserOut(BaseModel):
+    """Schema returned to clients."""
+
     id: int
+    username: str
     is_admin: bool
-
