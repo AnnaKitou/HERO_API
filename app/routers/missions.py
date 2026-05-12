@@ -32,7 +32,10 @@ def create_mission(data: MissionCreate, session: SessionDep, user: CurrentUser):
     # Verify hero exists
     hero = session.get(Hero, data.hero_id)
     if not hero:
-        raise HTTPException(status_code=404, detail="Hero not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Hero not found",
+        )
 
     mission = Mission(**data.model_dump())
     session.add(mission)
@@ -46,7 +49,10 @@ def get_mission(mission_id: int, session: SessionDep):
     """Get a single mission by ID."""
     mission = session.get(Mission, mission_id)
     if not mission:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Mission not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Mission not found",
+        )
     return mission
 
 
@@ -63,7 +69,10 @@ def update_mission(
     """
     mission = session.get(Mission, mission_id)
     if not mission:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Mission not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Mission not found",
+        )
 
     for field, value in patch.model_dump(exclude_unset=True).items():
         setattr(mission, field, value)
@@ -82,7 +91,10 @@ def delete_mission(
     """Delete a mission. Admin only."""
     mission = session.get(Mission, mission_id)
     if not mission:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Mission not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Mission not found",
+        )
 
     session.delete(mission)
     session.commit()

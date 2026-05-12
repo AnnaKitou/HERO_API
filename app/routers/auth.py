@@ -17,7 +17,10 @@ def register(data: UserCreate, session: SessionDep):
     """Register a new user. Username 'admin' gets admin rights."""
     existing = session.exec(select(User).where(User.username == data.username)).first()
     if existing:
-        raise HTTPException(400, "Username already taken")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already taken",
+        )
     user = User(
         username=data.username,
         hashed_password=hash_password(data.password),

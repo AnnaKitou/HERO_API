@@ -41,7 +41,10 @@ def get_hero(hero_id: int, session: SessionDep):
     """Get a single hero by ID."""
     hero = session.get(Hero, hero_id)
     if not hero:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Hero not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Hero not found",
+        )
     return hero
 
 
@@ -58,7 +61,10 @@ def update_hero(
     """
     hero = session.get(Hero, hero_id)
     if not hero:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Hero not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Hero not found",
+        )
     for field, value in patch.model_dump(exclude_unset=True).items():
         setattr(hero, field, value)
     session.add(hero)
@@ -95,7 +101,7 @@ def delete_hero(
 
     if active_missions:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Cannot delete hero with active missions",
         )
 
