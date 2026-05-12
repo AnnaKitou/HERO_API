@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
 HERO_API is a FastAPI application for managing heroes and missions with JWT-based authentication. It demonstrates production-ready patterns including database ORM, authentication, role-based access control (admin/user), custom exception handling, and comprehensive testing.
